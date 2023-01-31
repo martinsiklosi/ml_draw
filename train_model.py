@@ -7,6 +7,14 @@ from settings import *
 (train_images, train_labels), (test_images, test_labels) = \
     keras.datasets.mnist.load_data()
 
+def posterise(images):
+    images[images >= 200] == 255
+    images[images < 200] == 0
+    return images
+
+train_images = posterise(train_images)
+test_images = posterise(test_images)
+
 # setup model
 model = keras.Sequential([
     keras.layers.Flatten(input_shape=(GRID_SIZE, GRID_SIZE)),
@@ -22,7 +30,7 @@ model.compile(
 )
 
 # train model
-model.fit(train_images, train_labels, epochs=3)
+model.fit(train_images, train_labels, epochs=4)
 
 # save model
 model.save('model')

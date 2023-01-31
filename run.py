@@ -71,7 +71,10 @@ while run:
             else:
                 try:
                     row, col = get_row_col_from_pos(pos)
-                    grid[row][col] = BLACK
+                    for i in range(-THICKNESS, THICKNESS):
+                        for j in range(-THICKNESS, THICKNESS):
+                            if 0 <= abs(i) + abs(j) < THICKNESS:
+                                grid[row+i][col+j] = BLACK
                 except IndexError:
                     pass
                 
