@@ -11,26 +11,26 @@ class Button:
         self.text = text
         self.text_color = text_color
         
-        def draw(self, window):
-            pygame.draw.rect(
-                win, self.color, (self.x, self.y, self.width, self.height)
-            )
-            pygame.draw.rect(
-                    win, black, (self.x, self.y, self.width, self.height), 2
-                )
-            if self.text:
-                button_font = get_font(22)
-                text_surface = button_font.render(self.text, 1, self.text_color)
-                window.blit(text_surface, (
-                    self.x + self.self.width/2 - text_surface.get_width()/2,
-                    self.y + self.height/2 - text_surface.get_height()/2
-                ))    
-                
-        def clicked(self, pos):
-            x, y = pos
-            if not (x >= self.x and x <= self.x + self.width):
-                return False
-            if not (y >= self.y and y <= self.y + self.width):
-                return False
-            return True
+    def draw(self, window):
+        pygame.draw.rect(
+            window, self.color, (self.x, self.y, self.width, self.height)
+        )
+        pygame.draw.rect(
+            window, BLACK, (self.x, self.y, self.width, self.height), 2
+        )
+        if self.text:
+            button_font = get_font(16)
+            text_surface = button_font.render(self.text, 1, self.text_color)
+            window.blit(text_surface, (
+                self.x + self.width/2 - text_surface.get_width()/2,
+                self.y + self.height/2 - text_surface.get_height()/2
+            ))    
+            
+    def clicked(self, pos):
+        x, y = pos
+        if not (x >= self.x and x <= self.x + self.width):
+            return False
+        if not (y >= self.y and y <= self.y + self.width):
+            return False
+        return True
         

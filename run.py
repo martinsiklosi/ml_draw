@@ -21,9 +21,13 @@ def draw_grid(window, grid):
         for j, pixel in enumerate(row):
             pygame.draw.rect(window, pixel, (j*PIXEL_SIZE, i*PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE))
 
-def draw(window, grid):
+def draw(window, grid, buttons):
     window.fill(WHITE)
     draw_grid(window, grid)
+    
+    for button in buttons:
+        button.draw(window)
+    
     pygame.display.update()
 
 def get_row_col_from_pos(pos):
@@ -53,13 +57,20 @@ while run:
             
         if pygame.mouse.get_pressed()[0]:
             pos = pygame.mouse.get_pos()
-            try:
-                row, col = get_row_col_from_pos(pos)
-                grid[row][col] = BLACK
-            except IndexError:
-                pass
-            
-                    
-    draw(WINDOW, grid)
+            for button in buttons:
+                if not button.clicked(pos):
+                    continue
+                if button.text == "Clear":
+                    grid = init_grid(ROWS, COLS, WHITE)
+                #add analyze button function here
+                break
+            else:
+                try:
+                    row, col = get_row_col_from_pos(pos)
+                    grid[row][col] = BLACK
+                except IndexError:
+                    pass
+                
+    draw(WINDOW, grid, buttons)
             
 pygame.quit()
