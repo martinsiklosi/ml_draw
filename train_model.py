@@ -10,8 +10,8 @@ from settings import *
 # setup model
 model = keras.Sequential([
     keras.layers.Flatten(input_shape=(GRID_SIZE, GRID_SIZE)),
-    keras.layers.Dense(392, activation=tf.nn.relu),
-    keras.layers.Dense(392, activation=tf.nn.relu),
+    keras.layers.Dense(196, activation=tf.nn.relu),
+    keras.layers.Dense(196, activation=tf.nn.relu),
     keras.layers.Dense(10, activation=tf.nn.softmax),
 ])
 
@@ -22,7 +22,7 @@ model.compile(
 )
 
 # train model
-model.fit(train_images, train_labels, epochs=5)
+model.fit(train_images, train_labels, epochs=3)
 
 # save model
 model.save('model')
