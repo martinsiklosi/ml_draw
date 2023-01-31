@@ -10,8 +10,8 @@ from settings import *
 # setup model
 model = keras.Sequential([
     keras.layers.Flatten(input_shape=(GRID_SIZE, GRID_SIZE)),
-    keras.layers.Dense(128, activation=tf.nn.relu),
-    keras.layers.Dense(128, activation=tf.nn.relu),
+    keras.layers.Dense(392, activation=tf.nn.relu),
+    keras.layers.Dense(392, activation=tf.nn.relu),
     keras.layers.Dense(10, activation=tf.nn.softmax),
 ])
 
