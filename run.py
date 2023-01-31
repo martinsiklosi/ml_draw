@@ -1,11 +1,12 @@
 import pygame
 from settings import *
 from button import Button
+from analyze import predict
 
 pygame.init()
 pygame.font.init()
 
-WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
+WINDOW = pygame.display.set_mode((WIN_SIZE, WIN_SIZE))
 pygame.display.set_caption("AnalyzerX2000")
 
 def init_grid(rows, cols, color):
@@ -42,11 +43,12 @@ def get_row_col_from_pos(pos):
 
 run = True
 clock = pygame.time.Clock()
-grid = init_grid(ROWS, COLS, WHITE)
+grid = init_grid(GRID_SIZE, GRID_SIZE, WHITE)
 
 buttons = [
     Button(10, 10, 50, 50, WHITE, "Clear", BLACK),
-    Button(70, 10, 50, 50, WHITE, "Analyze", BLACK)
+    Button(70, 10, 50, 50, WHITE, "Analyze", BLACK),
+    Button(130, 10, 150, 50, WHITE, "Result: ", BLACK)
 ]
 
 while run:
@@ -61,8 +63,10 @@ while run:
                 if not button.clicked(pos):
                     continue
                 if button.text == "Clear":
-                    grid = init_grid(ROWS, COLS, WHITE)
-                #add analyze button function here
+                    grid = init_grid(GRID_SIZE, GRID_SIZE, WHITE)
+                if button.text == "Analyze":
+                    prediction, cert = predict(grid)
+                    buttons[2].text = f"Result: {prediction} ({cert*100:.0f}%)"
                 break
             else:
                 try:

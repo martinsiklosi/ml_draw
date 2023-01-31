@@ -1,5 +1,6 @@
 import tensorflow as tf
 from tensorflow import keras
+from settings import *
 
 # get data
 # kika på https://www.tensorflow.org/tutorials/load_data/images
@@ -8,7 +9,7 @@ from tensorflow import keras
 
 # setup model
 model = keras.Sequential([
-    keras.layers.Flatten(input_shape=(28,28)),
+    keras.layers.Flatten(input_shape=(GRID_SIZE, GRID_SIZE)),
     keras.layers.Dense(128, activation=tf.nn.relu),
     keras.layers.Dense(128, activation=tf.nn.relu),
     keras.layers.Dense(10, activation=tf.nn.softmax),

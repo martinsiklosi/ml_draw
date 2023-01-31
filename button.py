@@ -30,7 +30,7 @@ class Button:
         x, y = pos
         if not (x >= self.x and x <= self.x + self.width):
             return False
-        if not (y >= self.y and y <= self.y + self.width):
+        if not (y >= self.y and y <= self.y + self.height):
             return False
         return True
         
