@@ -1,3 +1,4 @@
+import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from settings import *
@@ -12,16 +13,18 @@ def posterise(images):
     images[images < 200] == 0
     return images
 
+train_images = np.concatenate((train_images, test_images), axis=0)
+train_labels = np.concatenate((train_labels, test_labels), axis=0)
 train_images = posterise(train_images)
-test_images = posterise(test_images)
 
 # setup model
-model = keras.Sequential([
-    keras.layers.Flatten(input_shape=(GRID_SIZE, GRID_SIZE)),
-    keras.layers.Dense(196, activation=tf.nn.relu),
-    keras.layers.Dense(196, activation=tf.nn.relu),
-    keras.layers.Dense(10, activation=tf.nn.softmax),
-])
+model = keras.Sequential()
+for i in range(6):
+    model.add(keras.layers.Conv2D(8, 3, activation=tf.nn.relu, input_shape=(GRID_SIZE-2*i, GRID_SIZE-2*i, 1)))
+model.add(keras.layers.Flatten())
+for _ in range(12):
+    model.add(keras.layers.Dense(64, activation=tf.nn.relu))
+model.add(keras.layers.Dense(10, activation=tf.nn.softmax))
 
 model.compile(
     optimizer=tf.optimizers.Adam(),
@@ -30,7 +33,7 @@ model.compile(
 )
 
 # train model
-model.fit(train_images, train_labels, epochs=4)
+model.fit(train_images, train_labels, epochs=5)
 
 # save model
 model.save('model')
